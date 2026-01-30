@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Guidance – Course Selection</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background: linear-gradient(120deg,#e3f2fd,#fce4ec);
+    margin:0;
+    padding:0;
+}
+
+.container{
+    max-width:900px;
+    margin:30px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 15px 30px rgba(0,0,0,0.15);
+    animation: fadeUp 1s ease;
+}
+
+h2{
+    text-align:center;
+    color:#1565c0;
+    margin-bottom:20px;
+}
+
+.section{
+    margin-bottom:25px;
+}
+
+label{
+    font-weight:bold;
+    display:block;
+    margin-bottom:8px;
+}
+
+select{
+    width:100%;
+    padding:10px;
+    border-radius:6px;
+    border:1px solid #ccc;
+    font-size:15px;
+}
+
+.hidden{
+    display:none;
+}
+
+.list-box{
+    background:#f5f5f5;
+    padding:15px;
+    border-radius:8px;
+    margin-top:10px;
+    animation: fadeUp 0.8s ease;
+}
+
+.contact-box{
+    text-align:center;
+    margin-top:30px;
+}
+
+.contact-box a{
+    display:inline-block;
+    margin:10px;
+    padding:12px 25px;
+    border-radius:30px;
+    text-decoration:none;
+    color:#fff;
+    font-weight:bold;
+}
+
+.call{
+    background:#2e7d32;
+}
+
+.whatsapp{
+    background:#25d366;
+}
+
+@keyframes fadeUp{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Career Guidance – Course Selection</h2>
+
+<!-- 12th Group -->
+<div class="section">
+<label>1. Select your 12th Group</label>
+<select id="group" onchange="showInterest()">
+    <option value="">-- Select Group --</option>
+    <option value="science">Science (PCM / PCB)</option>
+    <option value="commerce">Commerce</option>
+    <option value="arts">Arts</option>
+</select>
+</div>
+
+<!-- Interested Field -->
+<div class="section hidden" id="interestSection">
+<label>2. Interested Field</label>
+<select id="interest" onchange="showCourses()">
+    <option value="">-- Select Field --</option>
+    <option value="engineering">Engineering</option>
+    <option value="medical">Medical</option>
+    <option value="business">Business</option>
+    <option value="design">Design</option>
+</select>
+</div>
+
+<!-- Courses -->
+<div class="section hidden" id="courseSection">
+<label>3. Available Courses</label>
+<div class="list-box" id="courses"></div>
+</div>
+
+<!-- Location -->
+<div class="section hidden" id="locationSection">
+<label>4. Preferred College Location</label>
+<select id="location" onchange="showColleges()">
+    <option value="">-- Select Location --</option>
+    <option value="chennai">Chennai</option>
+    <option value="coimbatore">Coimbatore</option>
+    <option value="bangalore">Bangalore</option>
+</select>
+</div>
+
+<!-- Colleges -->
+<div class="section hidden" id="collegeSection">
+<label>5. Colleges & Courses</label>
+<div class="list-box" id="colleges"></div>
+</div>
+
+<!-- Contact -->
+<div class="contact-box hidden" id="contactSection">
+<h3>Need Guidance?</h3>
+<a href="tel:+916383844137" class="call">📞 Call Us</a>
+<a href="https://wa.me/916383844137" class="whatsapp">💬 WhatsApp</a>
+</div>
+
+</div>
+
+<script>
+function showInterest(){
+    document.getElementById("interestSection").classList.remove("hidden");
+}
+
+function showCourses(){
+    const interest=document.getElementById("interest").value;
+    const coursesDiv=document.getElementById("courses");
+    document.getElementById("courseSection").classList.remove("hidden");
+    document.getElementById("locationSection").classList.remove("hidden");
+
+    let courses={
+        engineering:["B.E / B.Tech","AI & Data Science","Mechanical","Civil"],
+        medical:["MBBS","BDS","B.Sc Nursing","Allied Health"],
+        business:["B.Com","BBA","MBA (Integrated)"],
+        design:["Fashion Design","UI/UX Design","Interior Design"]
+    };
+
+    coursesDiv.innerHTML="<ul>"+courses[interest].map(c=>"<li>"+c+"</li>").join("")+"</ul>";
+}
+
+function showColleges(){
+    const location=document.getElementById("location").value;
+    const collegeDiv=document.getElementById("colleges");
+    document.getElementById("collegeSection").classList.remove("hidden");
+    document.getElementById("contactSection").classList.remove("hidden");
+
+    let colleges={
+        chennai:["Anna University – Engineering","SRM – Medical & Engineering","Loyola – Arts & Commerce"],
+        coimbatore:["PSG – Engineering","Amrita – Medical","CMS – Commerce"],
+        bangalore:["IISc – Research","RV College – Engineering","Christ University"]
+    };
+
+    collegeDiv.innerHTML="<ul>"+colleges[location].map(c=>"<li>"+c+"</li>").join("")+"</ul>";
+}
+</script>
+
+</body>
+</html>
