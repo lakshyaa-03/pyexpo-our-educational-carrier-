@@ -10,7 +10,6 @@ body{
     font-family: Arial, sans-serif;
     background: linear-gradient(120deg,#e3f2fd,#fce4ec);
     margin:0;
-    padding:0;
 }
 
 .container{
@@ -26,7 +25,7 @@ body{
 h2{
     text-align:center;
     color:#1565c0;
-    margin-bottom:20px;
+    margin-bottom:25px;
 }
 
 .section{
@@ -55,7 +54,6 @@ select{
     background:#f5f5f5;
     padding:15px;
     border-radius:8px;
-    margin-top:10px;
     animation: fadeUp 0.8s ease;
 }
 
@@ -74,13 +72,8 @@ select{
     font-weight:bold;
 }
 
-.call{
-    background:#2e7d32;
-}
-
-.whatsapp{
-    background:#25d366;
-}
+.call{ background:#2e7d32; }
+.whatsapp{ background:#25d366; }
 
 @keyframes fadeUp{
     from{opacity:0; transform:translateY(20px);}
@@ -97,35 +90,24 @@ select{
 <!-- 12th Group -->
 <div class="section">
 <label>1. Select your 12th Group</label>
-<select id="group" onchange="showInterest()">
+<select id="group" onchange="showCourses()">
     <option value="">-- Select Group --</option>
-    <option value="science">Science (PCM / PCB)</option>
+    <option value="pcm">Science (PCM)</option>
+    <option value="pcb">Science (PCB)</option>
     <option value="commerce">Commerce</option>
     <option value="arts">Arts</option>
 </select>
 </div>
 
-<!-- Interested Field -->
-<div class="section hidden" id="interestSection">
-<label>2. Interested Field</label>
-<select id="interest" onchange="showCourses()">
-    <option value="">-- Select Field --</option>
-    <option value="engineering">Engineering</option>
-    <option value="medical">Medical</option>
-    <option value="business">Business</option>
-    <option value="design">Design</option>
-</select>
-</div>
-
 <!-- Courses -->
 <div class="section hidden" id="courseSection">
-<label>3. Available Courses</label>
+<label>2. Courses Available for Your Group</label>
 <div class="list-box" id="courses"></div>
 </div>
 
 <!-- Location -->
 <div class="section hidden" id="locationSection">
-<label>4. Preferred College Location</label>
+<label>3. Preferred College Location</label>
 <select id="location" onchange="showColleges()">
     <option value="">-- Select Location --</option>
     <option value="chennai">Chennai</option>
@@ -136,7 +118,7 @@ select{
 
 <!-- Colleges -->
 <div class="section hidden" id="collegeSection">
-<label>5. Colleges & Courses</label>
+<label>4. Colleges & Courses</label>
 <div class="list-box" id="colleges"></div>
 </div>
 
@@ -150,41 +132,65 @@ select{
 </div>
 
 <script>
-function showInterest(){
-    document.getElementById("interestSection").classList.remove("hidden");
-}
+const courseData = {
+    pcm: {
+        courses: ["B.E / B.Tech", "AI & Data Science", "Mechanical Engineering", "Civil Engineering"],
+        colleges: {
+            chennai: ["Anna University – Engineering", "SRM – B.Tech", "VIT – Engineering"],
+            coimbatore: ["PSG Tech – Engineering", "KCT – B.Tech"],
+            bangalore: ["RV College – Engineering", "BMS College – B.Tech"]
+        }
+    },
+    pcb: {
+        courses: ["MBBS", "BDS", "B.Sc Nursing", "Allied Health Sciences"],
+        colleges: {
+            chennai: ["Stanley Medical College", "SRM Medical College"],
+            coimbatore: ["Amrita Medical College"],
+            bangalore: ["Bangalore Medical College"]
+        }
+    },
+    commerce: {
+        courses: ["B.Com", "BBA", "CA Foundation", "CS Foundation"],
+        colleges: {
+            chennai: ["Loyola College – B.Com", "Ethiraj – Commerce"],
+            coimbatore: ["CMS College – Commerce"],
+            bangalore: ["Christ University – BBA"]
+        }
+    },
+    arts: {
+        courses: ["BA English", "BA History", "Journalism", "Social Work"],
+        colleges: {
+            chennai: ["Presidency College", "Madras University"],
+            coimbatore: ["Bharathiar University"],
+            bangalore: ["St Joseph’s College"]
+        }
+    }
+};
 
 function showCourses(){
-    const interest=document.getElementById("interest").value;
-    const coursesDiv=document.getElementById("courses");
+    const group = document.getElementById("group").value;
+    if(!group) return;
+
     document.getElementById("courseSection").classList.remove("hidden");
     document.getElementById("locationSection").classList.remove("hidden");
 
-    let courses={
-        engineering:["B.E / B.Tech","AI & Data Science","Mechanical","Civil"],
-        medical:["MBBS","BDS","B.Sc Nursing","Allied Health"],
-        business:["B.Com","BBA","MBA (Integrated)"],
-        design:["Fashion Design","UI/UX Design","Interior Design"]
-    };
-
-    coursesDiv.innerHTML="<ul>"+courses[interest].map(c=>"<li>"+c+"</li>").join("")+"</ul>";
+    document.getElementById("courses").innerHTML =
+        "<ul>" + courseData[group].courses.map(c => "<li>"+c+"</li>").join("") + "</ul>";
 }
 
 function showColleges(){
-    const location=document.getElementById("location").value;
-    const collegeDiv=document.getElementById("colleges");
+    const group = document.getElementById("group").value;
+    const location = document.getElementById("location").value;
+    if(!location) return;
+
     document.getElementById("collegeSection").classList.remove("hidden");
     document.getElementById("contactSection").classList.remove("hidden");
 
-    let colleges={
-        chennai:["Anna University – Engineering","SRM – Medical & Engineering","Loyola – Arts & Commerce"],
-        coimbatore:["PSG – Engineering","Amrita – Medical","CMS – Commerce"],
-        bangalore:["IISc – Research","RV College – Engineering","Christ University"]
-    };
-
-    collegeDiv.innerHTML="<ul>"+colleges[location].map(c=>"<li>"+c+"</li>").join("")+"</ul>";
+    document.getElementById("colleges").innerHTML =
+        "<ul>" + courseData[group].colleges[location].map(c => "<li>"+c+"</li>").join("") + "</ul>";
 }
 </script>
 
 </body>
 </html>
+
